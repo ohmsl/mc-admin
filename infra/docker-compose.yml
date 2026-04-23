@@ -1,0 +1,44 @@
+services:
+  mc-admin:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    container_name: mc-admin
+    environment:
+      MC_RCON_HOST: ${MC_RCON_HOST:-minecraft}
+      MC_RCON_PORT: ${MC_RCON_PORT:-25575}
+      MC_RCON_PASSWORD: ${MC_RCON_PASSWORD}
+      MC_RCON_TIMEOUT_SECONDS: ${MC_RCON_TIMEOUT_SECONDS:-5}
+      MC_RCON_RETRY_COUNT: ${MC_RCON_RETRY_COUNT:-1}
+      MC_ALLOW_RAW_COMMAND: ${MC_ALLOW_RAW_COMMAND:-false}
+      MC_AUDIT_COLLECTION: ${MC_AUDIT_COLLECTION:-mc_audit_logs}
+      MC_ROLE_FIELD: ${MC_ROLE_FIELD:-role}
+    ports:
+      - "${MC_ADMIN_PORT:-8090}:8090"
+    volumes:
+      - pb_data:/app/pb_data
+    restart: unless-stopped
+    networks:
+      - mc_internal
+
+  # Optional reference service; keep Minecraft private on internal network.
+  # minecraft:
+  #   image: itzg/minecraft-server:latest
+  #   container_name: minecraft
+  #   environment:
+  #     EULA: "TRUE"
+  #     ENABLE_RCON: "true"
+  #     RCON_PASSWORD: ${MC_RCON_PASSWORD}
+  #   volumes:
+  #     - mc_data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - mc_internal
+
+volumes:
+  pb_data:
+  # mc_data:
+
+networks:
+  mc_internal:
+    driver: bridge

@@ -1,0 +1,25 @@
+# Node
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+coverage/
+apps/pb/pb
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# PocketBase runtime data
+pb_data/

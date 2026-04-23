@@ -1,0 +1,13 @@
+{
+  "name": "mc-admin",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Minecraft admin panel monorepo",
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:pb": "cd apps/pb && go run . serve --http=0.0.0.0:8090",
+    "build": "pnpm --filter web build && cd apps/pb && go build -o pb .",
+    "lint": "pnpm --filter web lint",
+    "test": "pnpm --filter web typecheck && cd apps/pb && go test ./..."
+  }
+}
